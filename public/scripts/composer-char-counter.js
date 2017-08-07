@@ -6,9 +6,9 @@ $(document ).ready(function() {
       let limit = 140;
 
       if (limit - charLength >= 0) {
-        $(this).siblings('span').text(limit - charLength);
+        $(this).siblings('span').removeClass('exceed-limit').text(limit - charLength);
       } else {
-        $(this).siblings('span').attr('style', 'color:red;').text(limit - charLength);
+        $(this).siblings('span').addClass('exceed-limit').text(limit - charLength);
       }
 
     });

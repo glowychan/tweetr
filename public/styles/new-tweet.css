@@ -32,3 +32,8 @@ input[value="Tweet"] {
   margin-right: 10px;
 }
 
+.exceed-limit {
+  color: red;
+}
+
+
