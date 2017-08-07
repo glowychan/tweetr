@@ -31,3 +31,57 @@ body {
     padding: 8px 0;
     background-color: #fff;
  }
+
+ article {
+    border: 1px solid darkgray;
+    border-radius: 8px;
+    height: 240px;
+    margin: 8px auto;
+    width: 90%;
+ }
+
+article header {
+  height: 80px;
+  background-color: #eee;
+}
+
+#avatar {
+  border-radius: 8px;
+  float: left;
+  height: 73px;
+  width: 73px;
+  padding: 4px;
+}
+
+#name {
+  color: #7F8F95;
+  float: left;
+  font-size: 1.5em;
+  font-weight: 700;
+  padding: 12px 4px;
+}
+
+#username {
+  color: #A9A9A9;
+  float: right;
+  padding: 16px;
+}
+
+ article p {
+  font-size: 1.25em;
+  height: 120px;
+  margin: 0;
+  padding: 24px 16px;
+ }
+
+ article footer {
+  height: 20px;
+  position: relative;
+  border-top: 1px solid darkgray;
+ }
+
+ #date {
+  line-height: 3em;
+  padding: 8px;
+  font-size: 0.75em;
+ }
