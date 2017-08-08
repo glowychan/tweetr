@@ -131,13 +131,14 @@ function milisecondConverter(ms) {
 
 function loadData() {
   $.getJSON("/tweets", function(result) {
-    $.each(result, renderTweets);
+    renderTweets(result);
   });
 }
 
-/* Call function to render tweets */
 $(document).ready(function() {
-  renderTweets(data);
+  /* Call function to render tweets */
+  // renderTweets(data);
+  loadData();
 
   $("#submit-tweet").submit(function(e) {
     $.ajax({
@@ -145,9 +146,10 @@ $(document).ready(function() {
          url: "/tweets",
          data: $(this).serialize(), // serializes the form's elements.
          success: function() {
-          console.log(this);
-          console.log("submitted");
+          // console.log(this);
+          // console.log("submitted");
           $('textarea').val('');
+          loadData();
         }
        });
 
