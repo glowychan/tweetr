@@ -49,6 +49,7 @@ article header {
   border-radius: 8px;
   float: left;
   height: 73px;
+  opacity: 0.6;
   width: 73px;
   padding: 4px;
 }
@@ -95,4 +96,16 @@ article header {
 
  article:hover #fa-container {
     display: unset;
+ }
+
+ article:hover #avatar {
+  opacity: 1.0;
+ }
+
+ article:hover #name {
+  color: #244751;
+ }
+
+ article:hover #username {
+  color: dimgray;
  }
