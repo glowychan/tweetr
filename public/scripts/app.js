@@ -94,17 +94,33 @@ $(document).ready(function() {
 
   /* Send tweet post to server and then render on page */
   $("#submit-tweet").submit(function(e) {
-    $.ajax({
-         type: "POST",
-         url: "/tweets",
-         data: $(this).serialize(),
-         success: function() {
-          $('textarea').val('');
-          loadData();
-        }
-       });
-      e.preventDefault();
-    });
+    e.preventDefault();
 
+    let tweetContent = e.currentTarget.children.text.value;
+
+    if (tweetContent.length === 0) {
+      alert("Tweet cannot be empty.");
+
+    } else if (tweetContent.length <= 140) {
+      $.ajax({
+       type: "POST",
+       url: "/tweets",
+       data: $(this).serialize(),
+       success: function() {
+
+
+        $('textarea').val('');
+        loadData();
+      },
+      error: function(error){
+        alert(error.responseText);
+      }
+     });
+
+    } else {
+      alert("Tweet exceeded character limit.");
+    }
+
+    });
 });
 
