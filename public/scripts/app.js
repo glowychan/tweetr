@@ -135,12 +135,15 @@ $(document).ready(function() {
 
 
   $("#submit-tweet").submit(function(e) {
-
     $.ajax({
          type: "POST",
          url: "/tweets",
-         data: $("#submit-tweet").serialize(), // serializes the form's elements.
-         success: function(data) { console.log(data, "submitted"); }
+         data: $(this).serialize(), // serializes the form's elements.
+         success: function() {
+          console.log(this);
+          console.log("submitted");
+          $('textarea').val('');
+        }
        });
 
       e.preventDefault(); // avoid to execute the actual submit of the form.
