@@ -88,11 +88,64 @@ function milisecondConverter(ms) {
   }
 }
 
+function validateTweetLength(number) {
+  if (number === 0) {
+    showNotification({ msg: "Tweet cannot be empty.", type: "error" });
+    return false;
+
+  } else if (number <= 140) {
+    return true;
+
+  } else {
+    showNotification({ msg: "Tweet exceeds character limit.", type: "error" });
+    return false;
+  }
+}
+
+function showNotification(contentObj) {
+  const msg = contentObj.msg;
+  const type = contentObj.type;
+
+  const newNotification = `<li class="notification ${type}">${msg}</li>`
+
+  let notifications = $('.notifications').html('').append(newNotification);
+
+  setTimeout(function () {
+    notifications.html('');
+  }, 2000)
+}
+
+
 $(document).ready(function() {
   /* Call function to render tweets */
   loadData();
 
   /* Send tweet post to server and then render on page */
+  $("#submit-tweet").submit(function(e) {
+    e.preventDefault();
+
+    let tweetLength = e.currentTarget.children.text.value.length;
+
+    if (validateTweetLength(tweetLength)) {
+      $.ajax({
+        type: "POST",
+        url: "/tweets",
+        data: $(this).serialize(),
+        success: function() {
+          $('textarea').val('');
+            loadData();
+        },
+        error: function(error){
+          alert(error.responseText);
+        }
+     });
+    }
+
+
+    });
+});
+
+  /* Original ajax post request function
   $("#submit-tweet").submit(function(e) {
     e.preventDefault();
 
@@ -122,5 +175,4 @@ $(document).ready(function() {
     }
 
     });
-});
-
+*/

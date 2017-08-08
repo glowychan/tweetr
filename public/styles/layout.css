@@ -26,6 +26,23 @@ body {
   width: 450px;
  }
 
+ /* Notifications */
+
+ .notifications {
+  display: inline;
+  list-style-type: none;
+  width: 100%;
+ }
+
+ .notification {
+  background-color: #eee;
+}
+
+.notification.error {
+  background-color: #FF9999;
+}
+
+
 /* Rendered Tweets */
 
  .tweet {
