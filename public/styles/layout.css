@@ -10,51 +10,47 @@ html {
   box-sizing: inherit;
 }
 
-/*
- * Global layout stuff
- */
+/* Global layout */
 
 body {
-  margin: 0;
-  color: #244751;
   background-color: #eee;
+  color: #244751;
   font-family: "Roboto Condensed", sans-serif;
+  margin: 0;
 }
 
-/*
- * Additional CSS can be defined below or in other CSS files, as per instructions
- */
-
  main {
-    width: 450px;
-    margin: 80px auto 0;
-    padding: 8px 0;
-    background-color: #fff;
+  background-color: #fff;
+  padding: 8px 0;
+  margin: 80px auto 0;
+  width: 450px;
  }
 
- article {
-    border: 1px solid darkgray;
-    border-radius: 8px;
-    height: 240px;
-    margin: 8px auto;
-    width: 90%;
+/* Rendered Tweets */
+
+ .tweet {
+  border: 1px solid #A9A9A9;
+  border-radius: 8px;
+  height: 240px;
+  margin: 8px auto;
+  width: 90%;
  }
 
-article header {
+.tweet-header {
   height: 80px;
   background-color: #eee;
 }
 
-#avatar {
+.avatar {
   border-radius: 8px;
   float: left;
   height: 73px;
   opacity: 0.6;
-  width: 73px;
   padding: 4px;
+  width: 73px;
 }
 
-#name {
+.name {
   color: #7F8F95;
   float: left;
   font-size: 1.5em;
@@ -62,50 +58,52 @@ article header {
   padding: 12px 4px;
 }
 
-#username {
+.username {
   color: #A9A9A9;
   float: right;
   padding: 16px;
 }
 
- article p {
+ .tweet-content p {
   font-size: 1.25em;
   height: 120px;
   margin: 0;
   padding: 24px 16px;
  }
 
- article footer {
+ .tweet-footer {
+  border-top: 1px solid #A9A9A9;
   height: 20px;
   position: relative;
-  border-top: 1px solid darkgray;
  }
 
- #date {
+ .date {
+  font-size: 0.75em;
   line-height: 3em;
   padding: 8px;
-  font-size: 0.75em;
  }
 
- #fa-container {
+ .fa-container {
+  color: #7CC4B7;
   display: none;
   float: right;
-  color: #7CC4B7;
   padding: 8px;
  }
 
- article:hover #fa-container {
-    display: unset;
- }
+/* Rendered Tweets on Hover State */
 
- article:hover #avatar {
+ .tweet:hover .avatar {
   opacity: 1.0;
  }
 
- article:hover #name {
+ .tweet:hover .name {
   color: #244751;
  }
 
- article:hover #username {
-  color: dimgray;
+ .tweet:hover .username {
+  color: #696969;
+ }
+
+ .tweet:hover .fa-container {
+  display: unset;
  }
