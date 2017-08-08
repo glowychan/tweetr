@@ -4,48 +4,92 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
-function renderTweets(tweets) {
-  let $renderedTweet = tweets.forEach(createTweetElement);
-  $('#tweets-container').append($renderedTweet);
-}
+let data = [
+  {
+    "user": {
+      "name": "Newton",
+      "avatars": {
+        "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
+        "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
+        "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
+      },
+      "handle": "@SirIsaac"
+    },
+    "content": {
+      "text": "If I have seen further it is by standing on the shoulders of giants"
+    },
+    "created_at": 1461116232227
+  },
+  {
+    "user": {
+      "name": "Descartes",
+      "avatars": {
+        "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
+        "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
+        "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
+      },
+      "handle": "@rd" },
+    "content": {
+      "text": "Je pense , donc je suis"
+    },
+    "created_at": 1461113959088
+  },
+  {
+    "user": {
+      "name": "Johann von Goethe",
+      "avatars": {
+        "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
+        "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
+        "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
+      },
+      "handle": "@johann49"
+    },
+    "content": {
+      "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
+    },
+    "created_at": 1461113796368
+  }
+];
 
-/*
-function createTweetElement(tweet) {
-  let $tweet = $('<article>').addClass('tweet')
-  let tweetContent = $tweet.html(`${tweet.content.text}`);
-  // console.log($tweet);
+function renderTweets(tweets) {
+  tweets.forEach(function(tweet) {
+    let renderedTweet = createTweetElement(tweet);
+    $('.tweets-container').append(renderedTweet);
+  });
+  console.log("renderTweets function");
 }
-*/
 
 function createTweetElement(tweet) {
 
   // Create basic tweet DOM structure of tweet article
-  let $tweet = $('<article class="tweet">')
-               .append($('<header class="tweet-header">'))
-               .append($('<div class="tweet-content">'))
-               .append($('<footer class="tweet-footer">'));
+  let $tweet = $('<article>').addClass('tweet');
 
-  // Create nested tags for tweet DOM structure
-  let header = $(".tweet-header").append($(`<img class="avatar" src="${tweet.user.avatars.large}" alt="avatar">`))
-                                 .append($(`<span class="name">${tweet.user.name}</span>`))
-                                 .append($(`<span class="name">${tweet.user.handle}</span>`));
+  // Create nested tags and insert content for tweet DOM structure
+  let $tweetHeader = $('<header>').addClass('tweet-header')
+               .append($(`<img class="avatar" src="${tweet.user.avatars.large}" alt="avatar">`))
+               .append($(`<span class="name">${tweet.user.name}</span>`))
+               .append($(`<span class="username">${tweet.user.handle}</span>`));
 
+  let $tweetContent = $('<div>').addClass('tweet-content')
+                      .html(`<p>${tweet.content.text}</p>`);
 
-  // console.log($tweet);
-  console.log(header)
-  let tweetContent = $(".tweet-content").html(`<p>${tweet.content.text}</p>`);
-  //console.log(tweetContent);
+  let $tweetFooter = $('<footer>').addClass('tweet-footer')
+                     .append($(`<span class="date">${tweet.created_at}</span>`))
+                     .append($(`
+                        <div class="fa-container">
+                          <i class="fa fa-flag" aria-hidden="true"></i>
+                          <i class="fa fa-refresh" aria-hidden="true"></i>
+                          <i class="fa fa-heart" aria-hidden="true"></i>
+                        </div>
+                      `));
 
-
+  $tweet.append($tweetHeader)
+        .append($tweetContent)
+        .append($tweetFooter);
+  return $tweet;
 }
 
-
-
-
-
 $(document).ready(function() {
-  // Call function
-
+  renderTweets(data);
 });
-
 
