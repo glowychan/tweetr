@@ -4,53 +4,12 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
-// hardcoded data replace with AJAX to grab data
-let data = [
-  {
-    "user": {
-      "name": "Newton",
-      "avatars": {
-        "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-        "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-        "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-      },
-      "handle": "@SirIsaac"
-    },
-    "content": {
-      "text": "If I have seen further it is by standing on the shoulders of giants"
-    },
-    "created_at": 1461116232227
-  },
-  {
-    "user": {
-      "name": "Descartes",
-      "avatars": {
-        "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-        "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-        "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-      },
-      "handle": "@rd" },
-    "content": {
-      "text": "Je pense , donc je suis"
-    },
-    "created_at": 1461113959088
-  },
-  {
-    "user": {
-      "name": "Johann von Goethe",
-      "avatars": {
-        "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-        "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-        "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-      },
-      "handle": "@johann49"
-    },
-    "content": {
-      "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-    },
-    "created_at": 1461113796368
-  }
-];
+/* Function for AJAX GET request to load data from server */
+function loadData() {
+  $.getJSON("/tweets", function(result) {
+    renderTweets(result);
+  });
+}
 
 /* Function to loop over tweets database and call render function on each */
 function renderTweets(tweets) {
@@ -129,31 +88,22 @@ function milisecondConverter(ms) {
   }
 }
 
-function loadData() {
-  $.getJSON("/tweets", function(result) {
-    renderTweets(result);
-  });
-}
-
 $(document).ready(function() {
   /* Call function to render tweets */
-  // renderTweets(data);
   loadData();
 
+  /* Send tweet post to server and then render on page */
   $("#submit-tweet").submit(function(e) {
     $.ajax({
          type: "POST",
          url: "/tweets",
-         data: $(this).serialize(), // serializes the form's elements.
+         data: $(this).serialize(),
          success: function() {
-          // console.log(this);
-          // console.log("submitted");
           $('textarea').val('');
           loadData();
         }
        });
-
-      e.preventDefault(); // avoid to execute the actual submit of the form.
+      e.preventDefault();
     });
 
 });
