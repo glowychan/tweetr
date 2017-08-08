@@ -49,21 +49,6 @@ let data = [
       "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
     },
     "created_at": 1461113796368
-  },
-    {
-    "user": {
-      "name": "Ronald McDonald",
-      "avatars": {
-        "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-        "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-        "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-      },
-      "handle": "@rdonald"
-    },
-    "content": {
-      "text": "<script>alert('uh oh!');</script>"
-    },
-    "created_at": 1461113796368
   }
 ];
 
@@ -83,9 +68,9 @@ function createTweetElement(tweet) {
 
   // Create nested tags and insert content for tweet DOM structure
   let $tweetHeader = $('<header>').addClass('tweet-header')
-               .append($(`<img class="avatar" src="${tweet.user.avatars.large}" alt="avatar">`))
-               .append($(`<span class="name">${tweet.user.name}</span>`))
-               .append($(`<span class="username">${tweet.user.handle}</span>`));
+                     .append($(`<img class="avatar" src="${tweet.user.avatars.large}" alt="avatar">`))
+                     .append($(`<span class="name">${tweet.user.name}</span>`))
+                     .append($(`<span class="username">${tweet.user.handle}</span>`));
 
   let $tweetContent = $('<div>').addClass('tweet-content')
                       .html(`<p>${escape(tweet.content.text)}</p>`);
@@ -147,5 +132,19 @@ function milisecondConverter(ms) {
 /* Call function to render tweets */
 $(document).ready(function() {
   renderTweets(data);
+
+
+  $("#submit-tweet").submit(function(e) {
+
+    $.ajax({
+         type: "POST",
+         url: "/tweets",
+         data: $("#submit-tweet").serialize(), // serializes the form's elements.
+         success: function(data) { console.log(data, "submitted"); }
+       });
+
+      e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+
 });
 
