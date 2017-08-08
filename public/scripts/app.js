@@ -4,6 +4,7 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
+// hardcoded data replace with AJAX to grab data
 let data = [
   {
     "user": {
@@ -52,11 +53,10 @@ let data = [
 ];
 
 function renderTweets(tweets) {
-  tweets.forEach(function(tweet) {
+  tweets.forEach(tweet => {
     let renderedTweet = createTweetElement(tweet);
     $('.tweets-container').append(renderedTweet);
   });
-  console.log("renderTweets function");
 }
 
 function createTweetElement(tweet) {
@@ -74,7 +74,7 @@ function createTweetElement(tweet) {
                       .html(`<p>${tweet.content.text}</p>`);
 
   let $tweetFooter = $('<footer>').addClass('tweet-footer')
-                     .append($(`<span class="date">${tweet.created_at}</span>`))
+                     .append($(`<span class="date">${milisecondConverter(tweet.created_at)}</span>`))
                      .append($(`
                         <div class="fa-container">
                           <i class="fa fa-flag" aria-hidden="true"></i>
@@ -87,6 +87,34 @@ function createTweetElement(tweet) {
         .append($tweetContent)
         .append($tweetFooter);
   return $tweet;
+}
+
+function milisecondConverter(ms) {
+
+  let s = Math.floor(ms / 1000);
+  let min = Math.floor(ms / 60000);
+  let hr = Math.floor(ms / 3600000);
+  let day = Math.floor(ms / 86400000);
+  let month = Math.floor(ms / 2628000000)
+
+  if (ms < 60000) {
+    //convert to seconds
+      return `${s} s ago`;
+  } else if (ms < 3600000) {
+    //convert to minutes
+      return `${min} min ago`;
+  } else if (ms < 86400000) {
+    // convert to hours
+      return `${hr} hr ago`;
+  } else if (ms < 2628000000) {
+    // convert to days
+      return `${day} d ago`;
+  } else if (ms < 31556926000) {
+    // convert to months
+      return `${month} m ago`;
+  } else {
+    return "Over a year ago";
+  }
 }
 
 $(document).ready(function() {
