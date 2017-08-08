@@ -49,9 +49,25 @@ let data = [
       "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
     },
     "created_at": 1461113796368
+  },
+    {
+    "user": {
+      "name": "Ronald McDonald",
+      "avatars": {
+        "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
+        "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
+        "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
+      },
+      "handle": "@rdonald"
+    },
+    "content": {
+      "text": "<script>alert('uh oh!');</script>"
+    },
+    "created_at": 1461113796368
   }
 ];
 
+/* Function to loop over tweets database and call render function on each */
 function renderTweets(tweets) {
   tweets.forEach(tweet => {
     let renderedTweet = createTweetElement(tweet);
@@ -59,6 +75,7 @@ function renderTweets(tweets) {
   });
 }
 
+/* Function to render tweet */
 function createTweetElement(tweet) {
 
   // Create basic tweet DOM structure of tweet article
@@ -71,7 +88,7 @@ function createTweetElement(tweet) {
                .append($(`<span class="username">${tweet.user.handle}</span>`));
 
   let $tweetContent = $('<div>').addClass('tweet-content')
-                      .html(`<p>${tweet.content.text}</p>`);
+                      .html(`<p>${escape(tweet.content.text)}</p>`);
 
   let $tweetFooter = $('<footer>').addClass('tweet-footer')
                      .append($(`<span class="date">${milisecondConverter(tweet.created_at)}</span>`))
@@ -89,6 +106,16 @@ function createTweetElement(tweet) {
   return $tweet;
 }
 
+
+/* Escape XSS unsafe characters */
+function escape(str) {
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+
+/* Create timestamp for tweet */
 function milisecondConverter(ms) {
 
   let s = Math.floor(ms / 1000);
@@ -117,6 +144,7 @@ function milisecondConverter(ms) {
   }
 }
 
+/* Call function to render tweets */
 $(document).ready(function() {
   renderTweets(data);
 });
