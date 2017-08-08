@@ -85,3 +85,14 @@ article header {
   padding: 8px;
   font-size: 0.75em;
  }
+
+ #fa-container {
+  display: none;
+  float: right;
+  color: #7CC4B7;
+  padding: 8px;
+ }
+
+ article:hover #fa-container {
+    display: unset;
+ }
