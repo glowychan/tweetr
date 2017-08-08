@@ -129,10 +129,15 @@ function milisecondConverter(ms) {
   }
 }
 
+function loadData() {
+  $.getJSON("/tweets", function(result) {
+    $.each(result, renderTweets);
+  });
+}
+
 /* Call function to render tweets */
 $(document).ready(function() {
   renderTweets(data);
-
 
   $("#submit-tweet").submit(function(e) {
     $.ajax({
