@@ -1,31 +1,16 @@
-/*
- * Client-side JS logic goes here
- * jQuery is already loaded
- * Reminder: Use (and do all your DOM work in) jQuery's document ready function
- */
+/* Client-side JS logic goes here. jQuery is already loaded */
 
-/* Function for AJAX GET request to load data from server */
-function loadData() {
-  $.getJSON("/tweets", function(result) {
-    renderTweets(result);
-  });
-}
+/* :::::::::::::::::::::::::::::::::::::::::::: */
+/* :HELPER FUNCTIONS TO LOAD AND RENDER TWEETS: */
+/* :::::::::::::::::::::::::::::::::::::::::::: */
 
-/* Function to loop over tweets database and call render function on each */
-function renderTweets(tweets) {
-  tweets.forEach(tweet => {
-    let renderedTweet = createTweetElement(tweet);
-    $('.tweets-container').append(renderedTweet);
-  });
-}
-
-/* Function to render tweet */
+/* Create DOM structure for a tweet */
 function createTweetElement(tweet) {
 
-  // Create basic tweet DOM structure of tweet article
+  // Create article tag with class of tweet
   let $tweet = $('<article>').addClass('tweet');
 
-  // Create nested tags and insert content for tweet DOM structure
+  // Create other nested tags and insert content for tweet
   let $tweetHeader = $('<header>').addClass('tweet-header')
                      .append($(`<img class="avatar" src="${tweet.user.avatars.large}" alt="avatar">`))
                      .append($(`<span class="name">${tweet.user.name}</span>`))
@@ -44,12 +29,32 @@ function createTweetElement(tweet) {
                         </div>
                       `));
 
+  // Append nested tags to the parent article tag
   $tweet.append($tweetHeader)
         .append($tweetContent)
         .append($tweetFooter);
+
   return $tweet;
 }
 
+/* Loop over tweets database and call createTweetElement for each */
+function renderTweets(tweets) {
+  tweets.forEach(tweet => {
+    let renderedTweet = createTweetElement(tweet);
+    $('.tweets-container').append(renderedTweet);
+  });
+}
+
+/* Load tweet data from server and call renderTweets */
+function loadData() {
+  $.getJSON("/tweets", function(result) {
+    renderTweets(result);
+  });
+}
+
+/* :::::::::::::::::::::::::::::::::::::::::::: */
+/* :::::::::: OTHER HELPER FUNCTIONS :::::::::: */
+/* :::::::::::::::::::::::::::::::::::::::::::: */
 
 /* Escape XSS unsafe characters */
 function escape(str) {
@@ -58,36 +63,7 @@ function escape(str) {
   return div.innerHTML;
 }
 
-
-/* Create timestamp for tweet */
-function milisecondConverter(ms) {
-
-  let s = Math.floor(ms / 1000);
-  let min = Math.floor(ms / 60000);
-  let hr = Math.floor(ms / 3600000);
-  let day = Math.floor(ms / 86400000);
-  let month = Math.floor(ms / 2628000000)
-
-  if (ms < 60000) {
-    //convert to seconds
-      return `${s} s ago`;
-  } else if (ms < 3600000) {
-    //convert to minutes
-      return `${min} min ago`;
-  } else if (ms < 86400000) {
-    // convert to hours
-      return `${hr} hr ago`;
-  } else if (ms < 2628000000) {
-    // convert to days
-      return `${day} d ago`;
-  } else if (ms < 31556926000) {
-    // convert to months
-      return `${month} m ago`;
-  } else {
-    return "Over a year ago";
-  }
-}
-
+/* Validate length of tweet prior to form submission */
 function validateTweetLength(number) {
   if (number === 0) {
     showNotification({ msg: "Tweet cannot be empty.", type: "error" });
@@ -102,6 +78,7 @@ function validateTweetLength(number) {
   }
 }
 
+/* Render notification messages if an error occurs on form submission */
 function showNotification(contentObj) {
   const msg = contentObj.msg;
   const type = contentObj.type;
@@ -115,18 +92,45 @@ function showNotification(contentObj) {
   }, 2000)
 }
 
+/* Create timestamp for tweet */
+function milisecondConverter(ms) {
+
+  let s = Math.floor(ms / 1000);
+  let min = Math.floor(ms / 60000);
+  let hr = Math.floor(ms / 3600000);
+  let day = Math.floor(ms / 86400000);
+  let month = Math.floor(ms / 2628000000)
+
+  if (ms < 60000) {
+      return `${s} s ago`;
+  } else if (ms < 3600000) {
+      return `${min} min ago`;
+  } else if (ms < 86400000) {
+      return `${hr} hr ago`;
+  } else if (ms < 2628000000) {
+      return `${day} d ago`;
+  } else if (ms < 31556926000) {
+      return `${month} m ago`;
+  } else {
+    return "Over a year ago";
+  }
+}
+
+/* :::::::::::::::::::::::::::::::::::::::::::: */
+/* ::::::::: SCRIPT TO LOAD ON THE DOM :::::::: */
+/* :::::::::::::::::::::::::::::::::::::::::::: */
 
 $(document).ready(function() {
-  /* Call function to render tweets */
+  /* Call function to load rendered tweets */
   loadData();
 
-  /* Toggle compose tweet form*/
+  /* Toggle animation for tweet form */
   $(".compose-btn").click(function(){
     $(".new-tweet").slideToggle();
     $( "textarea" ).focus();
   });
 
-  /* Send tweet post to server and then render on page */
+  /* Send new tweet to server and then render on page */
   $("#submit-tweet").submit(function(e) {
     e.preventDefault();
 
@@ -144,9 +148,7 @@ $(document).ready(function() {
         error: function(error){
           alert(error.responseText);
         }
-     });
+      });
     }
-
-
-    });
+  });
 });
