@@ -22,3 +22,28 @@
   font-size: 2em;
   line-height: 2em;
 }
+
+#nav-bar .compose-btn {
+  background-color: #E7FDFF;
+  border: 1px solid #000;
+  border-radius: 8px;
+  margin: 8px 16px;
+  padding: 20px;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.compose-btn a {
+  color: #00a087;
+  font-size: 22px;
+  text-decoration: none;
+}
+
+#nav-bar .compose-btn:hover {
+  background-color: #FFF;
+}
+
+.compose-btn a:hover {
+  color: #000;
+}

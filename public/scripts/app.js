@@ -133,7 +133,7 @@ $(document).ready(function() {
         data: $(this).serialize(),
         success: function() {
           $('textarea').val('');
-            loadData();
+          loadData();
         },
         error: function(error){
           alert(error.responseText);
