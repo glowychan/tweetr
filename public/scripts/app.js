@@ -120,6 +120,11 @@ $(document).ready(function() {
   /* Call function to render tweets */
   loadData();
 
+  /* Toggle compose tweet form*/
+  $(".compose-btn").click(function(){
+    $(".new-tweet").slideToggle();
+  });
+
   /* Send tweet post to server and then render on page */
   $("#submit-tweet").submit(function(e) {
     e.preventDefault();
@@ -144,35 +149,3 @@ $(document).ready(function() {
 
     });
 });
-
-  /* Original ajax post request function
-  $("#submit-tweet").submit(function(e) {
-    e.preventDefault();
-
-    let tweetContent = e.currentTarget.children.text.value;
-
-    if (tweetContent.length === 0) {
-      alert("Tweet cannot be empty.");
-
-    } else if (tweetContent.length <= 140) {
-      $.ajax({
-       type: "POST",
-       url: "/tweets",
-       data: $(this).serialize(),
-       success: function() {
-
-
-        $('textarea').val('');
-        loadData();
-      },
-      error: function(error){
-        alert(error.responseText);
-      }
-     });
-
-    } else {
-      alert("Tweet exceeded character limit.");
-    }
-
-    });
-*/
