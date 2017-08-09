@@ -41,7 +41,7 @@ function createTweetElement(tweet) {
 function renderTweets(tweets) {
   tweets.forEach(tweet => {
     let renderedTweet = createTweetElement(tweet);
-    $('.tweets-container').append(renderedTweet);
+    $('.tweets-container').prepend(renderedTweet);
   });
 }
 
@@ -93,28 +93,32 @@ function showNotification(contentObj) {
 }
 
 /* Create timestamp for tweet */
-function milisecondConverter(ms) {
+function milisecondConverter(timestamp) {
+  let time = new Date() - timestamp;
+  time = time / 1000;
 
-  let s = Math.floor(ms / 1000);
-  let min = Math.floor(ms / 60000);
-  let hr = Math.floor(ms / 3600000);
-  let day = Math.floor(ms / 86400000);
-  let month = Math.floor(ms / 2628000000)
-
-  if (ms < 60000) {
-      return `${s} s ago`;
-  } else if (ms < 3600000) {
-      return `${min} min ago`;
-  } else if (ms < 86400000) {
-      return `${hr} hr ago`;
-  } else if (ms < 2628000000) {
-      return `${day} d ago`;
-  } else if (ms < 31556926000) {
-      return `${month} m ago`;
+  if (time < 60) {
+    return `${Math.floor(time)} s`;
+  }
+  if (time < 60 * 60) {
+    return `${Math.floor(time/60)} min`;
+  }
+  if (time < 60 * 60 * 24) {
+    return `${Math.floor(time/60/60)} h`;
+  }
+  if (time < 60 * 60 * 24 * 7) {
+    return `${Math.floor(time/60/60/24)} d`;
+  }
+  if (time < 60 * 60 * 24 * 30) {
+    return `${Math.floor(time/60/60/24/7)} weeks`;
+  }
+  if (time < 60 * 60 * 24 * 365) {
+    return `${Math.floor(time/60/60/24/30)} months`;
   } else {
-    return "Over a year ago";
+    return `${Math.floor(time/60/60/24/365)} years`;
   }
 }
+
 
 /* :::::::::::::::::::::::::::::::::::::::::::: */
 /* ::::::::: SCRIPT TO LOAD ON THE DOM :::::::: */
