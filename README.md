@@ -3,7 +3,7 @@
 Tweeter is a simple, single-page Twitter clone.
 
 ## Screenshot
-!["Screenshot of application"]()
+!["Screenshot of application"](https://github.com/glowychan/tweetr/blob/master/docs/main.png)
 
 ## Getting Started
 
