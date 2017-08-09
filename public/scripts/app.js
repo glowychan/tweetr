@@ -123,6 +123,7 @@ $(document).ready(function() {
   /* Toggle compose tweet form*/
   $(".compose-btn").click(function(){
     $(".new-tweet").slideToggle();
+    $( "textarea" ).focus();
   });
 
   /* Send tweet post to server and then render on page */
