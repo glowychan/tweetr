@@ -102,7 +102,7 @@ body {
 
  .fa-container {
   color: #7CC4B7;
-  display: none;
+  /* display: none; */
   float: right;
   padding: 8px;
  }
@@ -123,4 +123,18 @@ body {
 
  .tweet:hover .fa-container {
   display: unset;
+ }
+
+ /* Likes Counter */
+
+
+ .red {
+  color: red;
+ }
+
+ .like-counter {
+  float: right;
+  font-size: 12px;
+  margin: 8px;
+  padding: 2px;
  }

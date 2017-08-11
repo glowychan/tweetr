@@ -25,8 +25,9 @@ function createTweetElement(tweet) {
                         <div class="fa-container">
                           <i class="fa fa-flag" aria-hidden="true"></i>
                           <i class="fa fa-refresh" aria-hidden="true"></i>
-                          <i class="fa fa-heart" aria-hidden="true"></i>
+                          <span class="like" data-tweetid=${tweet._id}><i class="fa fa-heart" aria-hidden="true"></i></span>
                         </div>
+                        <div class="like-counter">${tweet.likes} likes</div>
                       `));
 
   // Append nested tags to the parent article tag
@@ -155,4 +156,29 @@ $(document).ready(function() {
       });
     }
   });
+
+   $(document).on('click','.like',function(e){
+    // code here
+    e.preventDefault();
+    var tweetID = $(this).data('tweetid');
+    $(this).addClass("red"); // strange behaviour. should move in success
+
+    // console.log("clicked");
+    // console.log($(this));
+    // console.log($(".like").data('tweetid'));
+    $.ajax({
+      type: "POST",
+      url: `/tweets/${tweetID}/like`,
+      success: function() {
+        loadData();
+        // $(this).children(".fa-heart").addClass("user-liked"); //isolate specific heart
+
+      },
+      error: function(error){
+        alert(error.responseText);
+      }
+    });
+});
+
+
 });

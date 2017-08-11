@@ -29,7 +29,8 @@ module.exports = function(DataHelpers) {
       content: {
         text: req.body.text
       },
-      created_at: Date.now()
+      created_at: Date.now(),
+      likes: 0
     };
 
     DataHelpers.saveTweet(tweet, (err) => {
@@ -39,6 +40,20 @@ module.exports = function(DataHelpers) {
         res.status(201).send();
       }
     });
+  });
+
+  // endpoint: localhost:8080/tweets/:id/like
+  // we take :id from the url path and send it to DataHelpers' updateTweet function
+  // we also pass in a callback to handle what happens once the async task is done
+  tweetsRoutes.post("/:id/like", function(req, res) {
+    const callback = (err) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      } else {
+        res.status(201).send('Updated tweet');
+      }
+    };
+    DataHelpers.updateTweetLike(req.params.id, callback);
   });
 
   return tweetsRoutes;
